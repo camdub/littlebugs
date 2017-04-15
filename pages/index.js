@@ -1,4 +1,5 @@
 import React from 'react';
+import send from '../send-email';
 
 export default class Waitlist extends React.Component {
   state = {
@@ -7,7 +8,7 @@ export default class Waitlist extends React.Component {
       'Child Name': 'C',
       'Parent Name': 'C',
       'Age': 2,
-      'Email': 'c@w.com',
+      'Email': 'paula@rgang.net',
       'Gender': 'Male',
       'Preference': ['MW'],
       'PreK': false,
@@ -34,6 +35,8 @@ export default class Waitlist extends React.Component {
     });
     const json = res.json();
     this.setState({ loading: false });
+
+    send(data['Child Name'], data.Email);
   }
 
   onChange = evt => {

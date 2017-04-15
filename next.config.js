@@ -11,6 +11,7 @@ module.exports = {
     config.plugins.push(
       new webpack.DefinePlugin({
         'AIRTABLE_API_KEY': JSON.stringify(process.env.AIRTABLE_API_KEY),
+        'POSTMARK_API_KEY': JSON.stringify(process.env.POSTMARK_API_KEY)
       })
     );
 
