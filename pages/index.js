@@ -1,9 +1,5 @@
 import React from 'react';
 
-const fields = {
-
-};
-
 export default class Waitlist extends React.Component {
   state = {
     loading: false,
@@ -13,8 +9,8 @@ export default class Waitlist extends React.Component {
       'Age': 2,
       'Email': 'c@w.com',
       'Gender': 'Male',
-      'Preference': [],
-      'Pre-K': false,
+      'Preference': ['MW'],
+      'PreK': false,
     }
   };
 
@@ -51,10 +47,9 @@ export default class Waitlist extends React.Component {
       value = target.checked
         ? [ ...fields[target.name], target.value ]
         : fields[target.name].filter(p => p !== target.value);
-    else if (target.name === 'Pre-K')
+    else if (target.name === 'PreK')
       value = target.checked;
 
-    debugger
     this.setState({
       fields: {
         ...fields,
@@ -114,8 +109,22 @@ export default class Waitlist extends React.Component {
           />
 
           <label htmlFor="Gender">Gender</label>
-          <input type="radio" name="Gender" value="Male" required />Male
-          <input type="radio" name="Gender" value="Female" required />Female
+          <input
+            type="radio"
+            name="Gender"
+            value="Male"
+            required
+            onChange={this.onChange}
+            checked={fields.Gender === 'Male'}
+          />Male
+          <input
+            type="radio"
+            name="Gender"
+            value="Female"
+            required
+            onChange={this.onChange}
+            checked={fields.Gender === 'Female'}
+          />Female
 
           <label htmlFor="Preference">Day Preference</label>
           <input
@@ -134,7 +143,7 @@ export default class Waitlist extends React.Component {
           />Tuesday/Thursday
 
           <label htmlFor="PreK">I am interested in Pre-K (Friday) <small>only kids attending public school following year</small></label>
-          <input type="checkbox" name="Pre-K" value="Pre-K" checked={fields['Pre-K']} onChange={this.onChange} />
+          <input type="checkbox" name="PreK" value="PreK" checked={fields['PreK']} onChange={this.onChange} />
 
           <input type="submit" value="Sign Up!" />
         </form>
