@@ -1,5 +1,9 @@
+import Head from 'next/head';
 import React from 'react';
 import send from '../send-email';
+import Checkbox from '../elements/checkbox';
+import Radio from '../elements/radio';
+import colors from '../elements/colors';
 
 export default class Waitlist extends React.Component {
   state = {
@@ -10,7 +14,7 @@ export default class Waitlist extends React.Component {
       'Age': 2,
       'Email': 'paula@rgang.net',
       'Gender': 'Male',
-      'Preference': ['MW'],
+      'Preference': ['MW', 'TH'],
       'PreK': false,
     }
   };
@@ -39,19 +43,20 @@ export default class Waitlist extends React.Component {
     send(data['Child Name'], data.Email);
   }
 
+  /**
+   * @param (Event | HTMLElement)
+   */
   onChange = evt => {
-    const target = evt.currentTarget;
+    const target = evt instanceof HTMLElement ? evt : evt.currentTarget;
     const { fields } = this.state;
 
     let value = target.value;
     // Handle Airtable specifc fields so they can be typecast on save
     // https://airtable.com/appDbeNzhBZ8GnE4S/api/docs
     if (target.name === 'Preference')
-      value = target.checked
-        ? [ ...fields[target.name], target.value ]
-        : fields[target.name].filter(p => p !== target.value);
+      value = target.value === 'None' ? ['MW', 'TH'] : [target.value];
     else if (target.name === 'PreK')
-      value = target.checked;
+      value = !target.checked;
 
     this.setState({
       fields: {
@@ -62,6 +67,7 @@ export default class Waitlist extends React.Component {
   }
 
   isPreferenceChecked = val => {
+    if (this.state.fields.Preference.length === 2) return true;
     return this.state.fields.Preference.indexOf(val) !== -1;
   }
 
@@ -70,8 +76,13 @@ export default class Waitlist extends React.Component {
 
     return (
       <div className="container">
+      <img src="/static/ladybug.svg" />
+        <Head>
+          <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
         <form onSubmit={this.onSubmit}>
-          <label htmlFor="Parent Name">Your Name</label>
+          <label className="fieldLabel" htmlFor="Parent Name">Your Name</label>
           <input
             type="text"
             required
@@ -80,7 +91,7 @@ export default class Waitlist extends React.Component {
             value={fields['Parent Name']}
           />
 
-          <label htmlFor="Email">Email</label>
+          <label className="fieldLabel" htmlFor="Email">Email</label>
           <input
             type="email"
             required
@@ -90,7 +101,7 @@ export default class Waitlist extends React.Component {
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
           />
 
-          <label htmlFor="Child Name">Child's Name</label>
+          <label className="fieldLabel" htmlFor="Child Name">Child's Name</label>
           <input
             type="text"
             required
@@ -99,7 +110,7 @@ export default class Waitlist extends React.Component {
             value={fields['Child Name']}
           />
 
-          <label htmlFor="Age">Child's Age</label>
+          <label className="fieldLabel" htmlFor="Age">Child's Age</label>
           <input
             type="number"
             required
@@ -111,50 +122,85 @@ export default class Waitlist extends React.Component {
             value={fields["Age"]}
           />
 
-          <label htmlFor="Gender">Gender</label>
-          <input
-            type="radio"
-            name="Gender"
-            value="Male"
-            required
-            onChange={this.onChange}
-            checked={fields.Gender === 'Male'}
-          />Male
-          <input
-            type="radio"
-            name="Gender"
-            value="Female"
-            required
-            onChange={this.onChange}
-            checked={fields.Gender === 'Female'}
-          />Female
+          <div className="fieldLabel">Gender</div>
+          <div className="radioRow">
+            <Radio
+              name="Gender"
+              value="Male"
+              required
+              onChange={this.onChange}
+              checked={fields.Gender === 'Male'}
+            >
+              Male
+            </Radio>
+            <Radio
+              name="Gender"
+              value="Female"
+              required
+              onChange={this.onChange}
+              checked={fields.Gender === 'Female'}
+            >
+              Female
+            </Radio>
+          </div>
 
-          <label htmlFor="Preference">Day Preference</label>
-          <input
-            type="checkbox"
-            name="Preference"
-            value="MW"
-            checked={this.isPreferenceChecked("MW")}
-            onChange={this.onChange}
-          />Monday/Wednesday
-          <input
-            type="checkbox"
-            name="Preference"
-            value="TTH"
-            checked={this.isPreferenceChecked("TTH")}
-            onChange={this.onChange}
-          />Tuesday/Thursday
+          <div className="fieldLabel">Day Preference</div>
+          <div className="radioRow">
+            <Radio
+              name="Preference"
+              value="MW"
+              checked={this.isPreferenceChecked("MW")}
+              onChange={this.onChange}
+            >
+              Mon / Wed
+            </Radio>
+            <Radio
+              name="Preference"
+              value="TTH"
+              checked={this.isPreferenceChecked("TTH")}
+              onChange={this.onChange}
+            >
+              Tue / Thurs
+            </Radio>
+            <Radio
+              name="Preference"
+              value="None"
+              checked={this.isPreferenceChecked("")}
+              onChange={this.onChange}
+            >
+              Either
+            </Radio>
+          </div>
 
-          <label htmlFor="PreK">I am interested in Pre-K (Friday) <small>only kids attending public school following year</small></label>
-          <input type="checkbox" name="PreK" value="PreK" checked={fields['PreK']} onChange={this.onChange} />
+          <Checkbox name="PreK" value="PreK" checked={fields['PreK']} onChange={this.onChange}>
+            I am interested in Pre-K (Friday) <small>only children attending TK or Kindergarden next year</small>
+          </Checkbox>
 
-          <input type="submit" value="Sign Up!" />
+          <input type="submit" value="Join Waitlist" />
         </form>
+        <div className="watermark">© Woodmansee & Co.</div>
         <style jsx>{`
+          .watermark {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            max-width: 30em;
+            padding-bottom: 20px;
+            color: ${colors.bg2};
+          }
           .container {
             display: flex;
+            flex-direction: column;
             margin: 0 auto;
-            width: 30%;
+            max-width: 30rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          small {
+            display: block;
+            color: ${colors.bg2} !important;
           }
 
           form {
@@ -167,12 +213,55 @@ export default class Waitlist extends React.Component {
             margin: 0; 
           }
 
-          input:valid {
-            color: green;
+          ::-moz-selection { /* Code for Firefox */
+            border: 1px solid ${colors.text};
           }
 
-          input:invalid {
-            color: red;
+          :global(input:focus) {
+            border: 1px solid ${colors.text};
+          }
+
+          .fieldLabel {
+            margin: 20px 0 5px 0;
+            color: ${colors.text};
+            font-size: 0.8em;
+            font-weight: 300;
+          }
+
+          input[type=text], input[type=number], input[type=email] {
+            border: none;
+            border-bottom: 3px solid ${colors.text};
+            background: transparent;
+            border-radius: 2px;
+            line-height: 2em;
+            font-size: 1.2em;
+            padding-left: 20px;
+            font-family: 'Lato', sans-serif !important;
+            outline: none;
+          }
+
+          :global(html) {
+            background-color: ${colors.bg};
+            font-family: 'Lato', sans-serif !important;
+          }
+          .radioRow {
+            display: flex;
+            flex-direction: row;
+          }
+
+          @media (max-width: 500px) {
+            .radioRow {
+              flex-direction: column;
+            }
+          }
+          input[type=submit] {
+            margin-top: 1em;
+            border: 4px solid ${colors.text};
+            padding: .5em;
+            border-radius: 8px;
+            font-size: 1.5em;
+            color: ${colors.text};
+            background-color: transparent;
           }
         `}</style>
       </div>

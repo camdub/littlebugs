@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="58px" height="57px" viewBox="0 0 58 57" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>ladybug</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile-Portrait" transform="translate(-156.000000, -17.000000)">
+            <g id="ladybug" transform="translate(154.000000, 13.000000)">
+                <g id="Page-1">
+                    <g id="ladybug" transform="translate(33.603674, 34.460126) rotate(-45.000000) translate(-33.603674, -34.460126) translate(13.603674, 6.960126)">
+                        <path d="M17.8834586,14.8609023 L30.8489954,14.8609023 C30.8489954,14.8609023 51.887218,13.8533835 27.9586466,54.406015 C26.6992481,56.924812 18.8909774,45.3383459 18.8909774,45.3383459 C18.8909774,45.3383459 17.8834586,44.3308271 16.8759398,45.5902256" id="Path-1" stroke="#EFEFF4" stroke-width="3"></path>
+                        <path d="M1.25939832,14.8609023 L14.2249349,14.8609023 C14.2249349,14.8609023 35.2631577,13.8533835 11.3345863,54.406015 C10.0751878,56.924812 2.26691712,45.3383459 2.26691712,45.3383459 C2.26691712,45.3383459 1.25939832,44.3308271 0.251879525,45.5902256" id="Path-1-Copy" stroke="#EFEFF4" stroke-width="3" transform="translate(11.513084, 34.811483) scale(-1, 1) translate(-11.513084, -34.811483) "></path>
+                        <rect id="Rectangle-3" fill="#F2405D" transform="translate(17.226689, 44.246672) rotate(-51.000000) translate(-17.226689, -44.246672) " x="14.5819522" y="42.1056947" width="5.28947368" height="4.28195489"></rect>
+                        <rect id="Rectangle-3-Copy" fill="#F2405D" transform="translate(22.264283, 43.994792) rotate(231.000000) translate(-22.264283, -43.994792) " x="19.6195463" y="41.853815" width="5.28947368" height="4.28195489"></rect>
+                        <circle id="Oval-1" fill="#EFEFF4" cx="6.54887218" cy="38.2857143" r="3.27443609"></circle>
+                        <circle id="Oval-3" fill="#EFEFF4" cx="16.0428932" cy="27.0285354" r="6.67481203"></circle>
+                        <circle id="Oval-4" fill="#EFEFF4" cx="31.4849624" cy="26.2348029" r="2.51879699"></circle>
+                        <ellipse id="Oval-2" fill="#EFEFF4" cx="28.1134617" cy="44.3412661" rx="3.52631579" ry="3.90413534"></ellipse>
+                        <path d="M7.05263158,11.3345865 C7.05263158,11.3345865 18.8909774,-6.54887218 31.9887218,11.3345865" id="Path-3" stroke="#EFEFF4" stroke-width="3"></path>
+                        <polyline id="Path-4" stroke="#EFEFF4" stroke-width="3" points="27.7067669 5.54135338 32.7443609 1.77635684e-14 36.2706767 3.52631579"></polyline>
+                        <polyline id="Path-4-Copy" stroke="#EFEFF4" stroke-width="3" transform="translate(6.045113, 3.022556) scale(-1, 1) translate(-6.045113, -3.022556) " points="1.76315789 5.79323308 6.80075188 0.251879699 10.3270677 3.77819549"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

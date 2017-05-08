@@ -3,7 +3,8 @@
     "dotenv": "^4.0.0",
     "next": "^2.1.1",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-transition-group": "^1.1.1"
   },
   "scripts": {
     "dev": "next",
