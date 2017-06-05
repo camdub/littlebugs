@@ -4,6 +4,7 @@ import send from '../send-email';
 import Checkbox from '../elements/checkbox';
 import Radio from '../elements/radio';
 import colors from '../elements/colors';
+import Submit from '../elements/loading-submit';
 
 export default class Waitlist extends React.Component {
   state = {
@@ -27,20 +28,22 @@ export default class Waitlist extends React.Component {
       ...this.state.fields,
       'Date Added': new Date()
     }
+    setTimeout(() => this.setState({ loading: false }), 3000);
 
-    const url = 'https://api.airtable.com/v0/appDbeNzhBZ8GnE4S/Waitlist';
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AIRTABLE_API_KEY}`
-      },
-      body: JSON.stringify({ fields: data, typecast: true })
-    });
-    const json = res.json();
-    this.setState({ loading: false });
+    // const url = 'https://api.airtable.com/v0/appDbeNzhBZ8GnE4S/Waitlist';
+    // const res = await fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+    //   },
+    //   body: JSON.stringify({ fields: data, typecast: true })
+    // });
+    // const json = res.json();
 
-    send(data['Child Name'], data.Email);
+    // await send(data['Child Name'], data.Email);
+
+    // this.setState({ loading: false });
   }
 
   /**
@@ -176,9 +179,8 @@ export default class Waitlist extends React.Component {
             I am interested in Pre-K (Friday) <small>only children attending TK or Kindergarden next year</small>
           </Checkbox>
 
-          <input type="submit" value="Join Waitlist" />
+          <Submit onClick={this.onSubmit} type="submit" value="Join Waitlist" loading={this.state.loading} />
         </form>
-        <div className="watermark">© Woodmansee & Co.</div>
         <style jsx>{`
           .watermark {
             position: absolute;
@@ -207,10 +209,10 @@ export default class Waitlist extends React.Component {
             display: flex;
             flex-direction: column;
           }
-          input[type=number]::-webkit-inner-spin-button, 
-          input[type=number]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+          input[type=number]::-webkit-inner-spin-button,
+          input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
           }
 
           ::-moz-selection { /* Code for Firefox */
@@ -253,15 +255,6 @@ export default class Waitlist extends React.Component {
             .radioRow {
               flex-direction: column;
             }
-          }
-          input[type=submit] {
-            margin-top: 1em;
-            border: 4px solid ${colors.text};
-            padding: .5em;
-            border-radius: 8px;
-            font-size: 1.5em;
-            color: ${colors.text};
-            background-color: transparent;
           }
         `}</style>
       </div>
