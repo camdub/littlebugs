@@ -6,6 +6,11 @@ import Radio from '../elements/radio';
 import colors from '../elements/colors';
 import Submit from '../elements/loading-submit';
 
+let swal = undefined;
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  swal = require('sweetalert2');
+}
+
 export default class Waitlist extends React.Component {
   state = {
     loading: false,
@@ -28,22 +33,29 @@ export default class Waitlist extends React.Component {
       ...this.state.fields,
       'Date Added': new Date()
     }
-    setTimeout(() => this.setState({ loading: false }), 3000);
 
-    // const url = 'https://api.airtable.com/v0/appDbeNzhBZ8GnE4S/Waitlist';
-    // const res = await fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer ${AIRTABLE_API_KEY}`
-    //   },
-    //   body: JSON.stringify({ fields: data, typecast: true })
-    // });
-    // const json = res.json();
+    try {
+      const url = 'https://api.airtable.com/v0/appDbeNzhBZ8GnE4S/Waitlist';
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+        },
+        body: JSON.stringify({ fields: data, typecast: true })
+      });
+      const json = res.json();
 
-    // await send(data['Child Name'], data.Email);
+      await send(data['Child Name'], data.Email);
+    }
+    catch(err) {
+      swal('Oops...', 'Something went wrong', 'error')
+    }
+    finally {
+      this.setState({ loading: false })
+    }
 
-    // this.setState({ loading: false });
+    swal('Success!', 'Look out for an email with more details', 'success')
   }
 
   /**
@@ -79,7 +91,7 @@ export default class Waitlist extends React.Component {
 
     return (
       <div className="container">
-      <img src="/static/ladybug.svg" />
+        <img src="/static/ladybug.svg" />
         <Head>
           <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -179,7 +191,7 @@ export default class Waitlist extends React.Component {
             I am interested in Pre-K (Friday) <small>only children attending TK or Kindergarden next year</small>
           </Checkbox>
 
-          <Submit onClick={this.onSubmit} type="submit" value="Join Waitlist" loading={this.state.loading} />
+          <Submit type="submit" value="Join Waitlist" loading={this.state.loading} />
         </form>
         <style jsx>{`
           .watermark {
