@@ -44,16 +44,16 @@ export default ({ children, onChange, ...props }) => {
           border-radius: 50%;
         }
         .indicator:after {
-            position: absolute;
-            display: none;
-            content: '';
-            top: 10px;
-            left: 10px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: ${colors.text}
-          }
+          position: absolute;
+          display: none;
+          content: '';
+          top: 10px;
+          left: 10px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: ${colors.text}
+        }
 
         input:checked ~ .indicator:after {
           display: block;
