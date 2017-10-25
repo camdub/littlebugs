@@ -15,10 +15,10 @@ export default class Waitlist extends React.Component {
   state = {
     loading: false,
     fields: {
-      'Child Name': 'C',
-      'Parent Name': 'C',
-      'Age': 2,
-      'Email': 'paula@rgang.net',
+      'Child Name': '',
+      'Parent Name': '',
+      'Age': null,
+      'Email': '',
       'Gender': 'Male',
       'Preference': ['MW', 'TH'],
       'PreK': false,
@@ -134,7 +134,7 @@ export default class Waitlist extends React.Component {
             maxLength="1"
             name="Age"
             onChange={this.onChange}
-            value={fields["Age"]}
+            value={fields["Age"] ? fields["Age"] : ''}
           />
 
           <div className="fieldLabel">Gender</div>
