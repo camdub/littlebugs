@@ -6,16 +6,17 @@ export default ({ children, onChange, ...props }) => {
     const target = evt.currentTarget;
 
     if (target.localName === 'label') {
-      onChange(target.children[1]);
+      onChange(target.children[0]);
     } else {
-      onChange(evt.currentTarget)
+      onChange(evt.currentTarget);
     }
   };
 
   return (
-    <label onClick={handleChange} htmlFor={props.name}>{children}
-      <input type="checkbox" onChange={onChange} {...props} />
-      <div className="indicator"></div>
+    <label onClick={handleChange} htmlFor={props.name}>
+      {children}
+      <input type="radio" onChange={onChange} {...props} />
+      <div className="indicator" />
       <style jsx>{`
         label {
           display: block;
@@ -24,9 +25,8 @@ export default ({ children, onChange, ...props }) => {
           font-size: 1.2em;
           color: ${colors.text};
           padding-left: 42px;
+          line-height: 2em;
           margin-right: 20px;
-          margin-top: 20px;
-          margin-bottom: 5px;
         }
 
         input {
@@ -42,19 +42,19 @@ export default ({ children, onChange, ...props }) => {
           width: 32px;
           height: 32px;
           background: ${colors.bg2};
+          border-radius: 50%;
         }
         .indicator:after {
-            position: absolute;
-            display: none;
-            content: '';
-            top: 2px;
-            left: 10px;
-            width: 8px;
-            height: 18px;
-            transform: rotate(45deg);
-            border: solid ${colors.text};
-            border-width: 0 4px 4px 0;
-          }
+          position: absolute;
+          display: none;
+          content: '';
+          top: 10px;
+          left: 10px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: ${colors.text};
+        }
 
         input:checked ~ .indicator:after {
           display: block;
