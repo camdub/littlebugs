@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import send from '../send-email';
 import Checkbox from '../elements/checkbox';
-import Radio from '../elements/radio';
+import Radio from '../elements/radio-bak';
 import colors from '../elements/colors';
 import Submit from '../elements/loading-submit';
 
@@ -17,12 +17,12 @@ export default class Waitlist extends React.Component {
     fields: {
       'Child Name': '',
       'Parent Name': '',
-      'Age': null,
-      'Email': '',
-      'Gender': 'Male',
-      'Preference': ['MW', 'TH'],
-      'PreK': false,
-    }
+      Age: null,
+      Email: '',
+      Gender: 'Male',
+      Preference: ['MW', 'TH'],
+      PreK: false,
+    },
   };
 
   onSubmit = async evt => {
@@ -31,8 +31,8 @@ export default class Waitlist extends React.Component {
 
     const data = {
       ...this.state.fields,
-      'Date Added': new Date()
-    }
+      'Date Added': new Date(),
+    };
 
     try {
       const url = 'https://api.airtable.com/v0/appDbeNzhBZ8GnE4S/Waitlist';
@@ -40,23 +40,21 @@ export default class Waitlist extends React.Component {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+          Authorization: `Bearer ${AIRTABLE_API_KEY}`,
         },
-        body: JSON.stringify({ fields: data, typecast: true })
+        body: JSON.stringify({ fields: data, typecast: true }),
       });
       const json = res.json();
 
       await send(data['Child Name'], data.Email);
-    }
-    catch(err) {
-      swal('Oops...', 'Something went wrong', 'error')
-    }
-    finally {
-      this.setState({ loading: false })
+    } catch (err) {
+      swal('Oops...', 'Something went wrong', 'error');
+    } finally {
+      this.setState({ loading: false });
     }
 
-    swal('Success!', 'Look out for an email with more details', 'success')
-  }
+    swal('Success!', 'Look out for an email with more details', 'success');
+  };
 
   /**
    * @param (Event | HTMLElement)
@@ -70,21 +68,20 @@ export default class Waitlist extends React.Component {
     // https://airtable.com/appDbeNzhBZ8GnE4S/api/docs
     if (target.name === 'Preference')
       value = target.value === 'None' ? ['MW', 'TH'] : [target.value];
-    else if (target.name === 'PreK')
-      value = !target.checked;
+    else if (target.name === 'PreK') value = !target.checked;
 
     this.setState({
       fields: {
         ...fields,
         [target.name]: value,
-      }
-    })
-  }
+      },
+    });
+  };
 
   isPreferenceChecked = val => {
     if (this.state.fields.Preference.length === 2) return true;
     return this.state.fields.Preference.indexOf(val) !== -1;
-  }
+  };
 
   render() {
     const { fields } = this.state;
@@ -93,11 +90,16 @@ export default class Waitlist extends React.Component {
       <div className="container">
         <img src="/static/ladybug.svg" />
         <Head>
-          <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Lato"
+            rel="stylesheet"
+          />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <form onSubmit={this.onSubmit}>
-          <label className="fieldLabel" htmlFor="Parent Name">Your Name</label>
+          <label className="fieldLabel" htmlFor="Parent Name">
+            Your Name
+          </label>
           <input
             type="text"
             required
@@ -106,7 +108,9 @@ export default class Waitlist extends React.Component {
             value={fields['Parent Name']}
           />
 
-          <label className="fieldLabel" htmlFor="Email">Email</label>
+          <label className="fieldLabel" htmlFor="Email">
+            Email
+          </label>
           <input
             type="email"
             required
@@ -116,7 +120,9 @@ export default class Waitlist extends React.Component {
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
           />
 
-          <label className="fieldLabel" htmlFor="Child Name">Child's Name</label>
+          <label className="fieldLabel" htmlFor="Child Name">
+            Child's Name
+          </label>
           <input
             type="text"
             required
@@ -125,7 +131,9 @@ export default class Waitlist extends React.Component {
             value={fields['Child Name']}
           />
 
-          <label className="fieldLabel" htmlFor="Age">Child's Age</label>
+          <label className="fieldLabel" htmlFor="Age">
+            Child's Age
+          </label>
           <input
             type="number"
             required
@@ -134,7 +142,7 @@ export default class Waitlist extends React.Component {
             maxLength="1"
             name="Age"
             onChange={this.onChange}
-            value={fields["Age"] ? fields["Age"] : ''}
+            value={fields['Age'] ? fields['Age'] : ''}
           />
 
           <div className="fieldLabel">Gender</div>
@@ -164,7 +172,7 @@ export default class Waitlist extends React.Component {
             <Radio
               name="Preference"
               value="MW"
-              checked={this.isPreferenceChecked("MW")}
+              checked={this.isPreferenceChecked('MW')}
               onChange={this.onChange}
             >
               Mon / Wed
@@ -172,7 +180,7 @@ export default class Waitlist extends React.Component {
             <Radio
               name="Preference"
               value="TTH"
-              checked={this.isPreferenceChecked("TTH")}
+              checked={this.isPreferenceChecked('TTH')}
               onChange={this.onChange}
             >
               Tue / Thurs
@@ -180,18 +188,28 @@ export default class Waitlist extends React.Component {
             <Radio
               name="Preference"
               value="None"
-              checked={this.isPreferenceChecked("")}
+              checked={this.isPreferenceChecked('')}
               onChange={this.onChange}
             >
               Either
             </Radio>
           </div>
 
-          <Checkbox name="PreK" value="PreK" checked={fields['PreK']} onChange={this.onChange}>
-            I am interested in Pre-K (Friday) <small>only children attending TK or Kindergarden next year</small>
+          <Checkbox
+            name="PreK"
+            value="PreK"
+            checked={fields['PreK']}
+            onChange={this.onChange}
+          >
+            I am interested in Pre-K (Friday){' '}
+            <small>only children attending TK or Kindergarden next year</small>
           </Checkbox>
 
-          <Submit type="submit" value="Join Waitlist" loading={this.state.loading} />
+          <Submit
+            type="submit"
+            value="Join Waitlist"
+            loading={this.state.loading}
+          />
         </form>
         <style jsx>{`
           .watermark {
@@ -221,13 +239,14 @@ export default class Waitlist extends React.Component {
             display: flex;
             flex-direction: column;
           }
-          input[type=number]::-webkit-inner-spin-button,
-          input[type=number]::-webkit-outer-spin-button {
+          input[type='number']::-webkit-inner-spin-button,
+          input[type='number']::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
           }
 
-          ::-moz-selection { /* Code for Firefox */
+          ::-moz-selection {
+            /* Code for Firefox */
             border: 1px solid ${colors.text};
           }
 
@@ -242,7 +261,9 @@ export default class Waitlist extends React.Component {
             font-weight: 300;
           }
 
-          input[type=text], input[type=number], input[type=email] {
+          input[type='text'],
+          input[type='number'],
+          input[type='email'] {
             border: none;
             border-bottom: 3px solid ${colors.text};
             background: transparent;

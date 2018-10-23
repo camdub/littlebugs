@@ -1,0 +1,9 @@
+{
+  "eslint.packageManager": "yarn",
+  "eslint.enable": true,
+  "files.exclude": {
+    ".next": true,
+    ".vscode": true,
+    "node_modules": true
+  }
+}
